@@ -29,7 +29,7 @@ logs/
 
 # development
 .idea/
-.vscode/
+#.vscode/
 *.swp
 .DS_Store
 
