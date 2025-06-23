@@ -5,7 +5,6 @@ env/
 .env
 .env.local
 uv.lock
-CLAUDE.md
 .claude/
 .cursorrules
 .cursor/
@@ -29,7 +28,7 @@ logs/
 
 # development
 .idea/
-.vscode/
+#.vscode/
 *.swp
 .DS_Store
 

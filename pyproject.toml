@@ -7,7 +7,7 @@ version = "0.1.1"
 description = "Verifiers for reinforcement learning with LLMs"
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.11,<3.13"
+requires-python = ">=3.12,<3.13"
 keywords = ["reinforcement-learning", "llm", "rl", "grpo", "verifiable-environments", "multi-turn"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -33,6 +33,7 @@ dependencies = [
     "datasets>=3.6.0",
     "transformers",
     "nest-asyncio>=1.6.0",
+    "pympler>=1.1",
 ]
 
 [project.optional-dependencies]
