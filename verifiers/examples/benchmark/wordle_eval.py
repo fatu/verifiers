@@ -154,7 +154,7 @@ def evaluate_wordle_dataset(
 ):
     """Run Wordle evaluation on HuggingFace dataset."""
     print(f"Loading dataset: {dataset_name}")
-    dataset = load_dataset(dataset_name, split=split)
+    dataset = load_dataset(dataset_name, split=split, download_mode="reuse_cache_if_exists")
     
     # Get tokenizer from the LLM
     tokenizer = llm.get_tokenizer()
@@ -206,7 +206,8 @@ def evaluate_wordle_dataset(
             prompt = tokenizer.apply_chat_template(
                 messages, 
                 tokenize=False, 
-                add_generation_prompt=True
+                add_generation_prompt=True,
+                enable_thinking=True
             )
 
             # Generate response
@@ -304,8 +305,8 @@ def main():
     """Main evaluation function."""
     
     
-    # model = "outputs/model/sft-wordle/checkpoint-1200"
-    model = "Qwen/Qwen3-4B"
+    model = "outputs/model/sft-wordle/checkpoint-1500"
+    # model = "Qwen/Qwen3-4B"
     dataset = "willcb/V3-wordle-test"
     num_episodes = 10
     thinking_budget = 512

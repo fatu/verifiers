@@ -3,58 +3,58 @@ from datasets import load_dataset
 from trl import SFTTrainer, SFTConfig, DataCollatorForCompletionOnlyLM
 from datasets import DownloadMode
 from datasets import config as datasets_config
+from verifiers.utils.qwen_template_multi_turn import MODIFIED_TEMPLATE
 
 """
 accelerate launch --config-file configs/zero3.yaml --num-processes 8 verifiers/examples/sft/wordle.py
 """
 
 # convenience function for FA2 initialization
-# model, tokenizer = vf.get_model_and_tokenizer("Qwen/Qwen3-1.7B", use_liger=False)
+model, tokenizer = vf.get_model_and_tokenizer("Qwen/Qwen3-1.7B", use_liger=False)
 # model = model.to('cuda')  # Move model to GPU for Flash Attention 2.0
-tokenizer = vf.get_tokenizer("Qwen/Qwen3-1.7B")
-dataset = load_dataset('willcb/V3-wordle', split='train[:10]', cache_dir=datasets_config.HF_DATASETS_CACHE, download_mode=DownloadMode.REUSE_CACHE_IF_EXISTS)
+# tokenizer.chat_template = MODIFIED_TEMPLATE  # Now handled by SFTConfig
+dataset = load_dataset('willcb/V3-wordle', split='train')
 
-def generate_conversation(examples):
-    prompts = examples["prompt"]
-    completions = examples["completion"]
-    conversations = []
-    for prompt, completion in zip(prompts, completions):
-        # Create a conversation with the prompt and completion
-        conversations.append(
-            prompt + completion
-        )
-    return { "conversations": conversations}
+# def generate_conversation(examples):
+#     prompts = examples["prompt"]
+#     completions = examples["completion"]
+#     conversations = []
+#     for prompt, completion in zip(prompts, completions):
+#         # Create a conversation with the prompt and completion
+#         conversations.append(
+#             prompt + completion
+#         )
+#     return { "conversations": conversations}
 
-reasoning_conversations = tokenizer.apply_chat_template(
-    dataset.map(generate_conversation, batched = True)["conversations"],
-    tokenize=False,
-    enable_thinking=False
-)
+# reasoning_conversations = tokenizer.apply_chat_template(
+#     dataset.map(generate_conversation, batched = True)["conversations"],
+#     tokenize=False,
+#     enable_thinking=False
+# )
 
-print(reasoning_conversations[0])
-import sys
-sys.exit()
+# print(reasoning_conversations[0])
+# import sys
+# sys.exit()
 
 tok_counts = []
 for row in dataset:
     # count tokens in (prompt, completion)
     messages = row['prompt'] + row['completion'] # type: ignore
+    messages[0]['content'] += 'Think briefly before answering. Keep your reasoning short and avoid unnecessary details.'
     toks = tokenizer.apply_chat_template( 
         messages,
-        enable_thinking=False,
         tokenize=True
     )
     tok_counts.append(len(toks))
 
-# def formatting_func_with_thinking(example):
-#     """Apply chat template with enable_thinking=False"""
-#     messages = example["prompt"] + example["completion"]
-#     return tokenizer.apply_chat_template(
-#         messages, 
-#         tokenize=False,
-#         add_generation_prompt=False,
-#         enable_thinking=False
-#     )
+def formatting_func_with_thinking(example):
+    """Apply chat template with enable_thinking=False"""
+    messages = example["prompt"] + example["completion"]
+    text = tokenizer.apply_chat_template(
+        messages, 
+        tokenize=False,
+    )
+    return {"conversations": text}
 
 # tok count stats
 print(f"Dataset size: {len(tok_counts)}")
@@ -80,7 +80,8 @@ args = SFTConfig(
     logging_steps=1,
     save_only_model=True,
     log_on_each_node=True,
-    completion_only_loss=True
+    completion_only_loss=True,
+    chat_template_path="/home/fatu/dev/others/verifiers/chat_template/qwen_chat_template.jinja"
     )
 
 
@@ -92,10 +93,12 @@ args = SFTConfig(
 #     mlm=False
 # )
 
+# Apply formatting function to dataset before passing to trainer
+formatted_dataset = dataset.map(formatting_func_with_thinking)
+
 trainer = SFTTrainer(
     model=model,
-    tokenizer=tokenizer,
     args=args,
-    train_dataset=dataset # type: ignore
+    train_dataset=formatted_dataset, # type: ignore
 )
 trainer.train()
