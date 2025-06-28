@@ -40,6 +40,7 @@
                 {%- set content = content.split('</think>')[-1].lstrip('\n') %}
             {%- endif %}
         {%- endif %}
+        {% generation %}
         {%- if reasoning_content %}
             {{- '<|im_start|>' + message.role + '\n<think>\n' + reasoning_content.strip('\n') + '\n</think>\n\n' + content.lstrip('\n') }}
         {%- else %}
@@ -65,6 +66,7 @@
             {%- endfor %}
         {%- endif %}
         {{- '<|im_end|>\n' }}
+        {% endgeneration %}
     {%- elif message.role == "tool" %}
         {%- if loop.first or (messages[loop.index0 - 1].role != "tool") %}
             {{- '<|im_start|>user' }}

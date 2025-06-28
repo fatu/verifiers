@@ -50,11 +50,11 @@ for row in dataset:
 def formatting_func_with_thinking(example):
     """Apply chat template with enable_thinking=False"""
     messages = example["prompt"] + example["completion"]
-    text = tokenizer.apply_chat_template(
-        messages, 
-        tokenize=False,
-    )
-    return {"conversations": text}
+    # text = tokenizer.apply_chat_template(
+    #     messages, 
+    #     tokenize=False,
+    # )
+    return {"messages": messages}
 
 # tok count stats
 print(f"Dataset size: {len(tok_counts)}")
@@ -80,7 +80,7 @@ args = SFTConfig(
     logging_steps=1,
     save_only_model=True,
     log_on_each_node=True,
-    completion_only_loss=True,
+    assistant_only_loss=True,
     chat_template_path="/home/fatu/dev/others/verifiers/chat_template/qwen_chat_template.jinja"
     )
 
@@ -94,7 +94,10 @@ args = SFTConfig(
 # )
 
 # Apply formatting function to dataset before passing to trainer
-formatted_dataset = dataset.map(formatting_func_with_thinking)
+formatted_dataset = dataset.map(
+    formatting_func_with_thinking,
+    remove_columns=["prompt", "completion"]  # Remove these fields after formatting
+)
 
 trainer = SFTTrainer(
     model=model,
