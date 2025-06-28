@@ -28,6 +28,7 @@
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false,
             "subProcess": true
+<<<<<<< HEAD
         },
         {
             "name": "Debug Wordle Eval",
@@ -58,6 +59,8 @@
             },
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false
+=======
+>>>>>>> dd7e55a5598a9ee1dda992a795492a8214c53550
         }
     ]
 }
