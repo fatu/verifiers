@@ -1,0 +1,149 @@
+[
+  {
+    "episode": 0,
+    "target_word": "JUDGE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SLIME",
+      "MIDGE",
+      "DIGEO",
+      "GUDGE",
+      "GUDGE"
+    ]
+  },
+  {
+    "episode": 1,
+    "target_word": "RIGHT",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SPORT",
+      "DIRTY",
+      "BIRTH",
+      "TRIUM",
+      "DIRTY"
+    ]
+  },
+  {
+    "episode": 2,
+    "target_word": "SHAKE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SLATE",
+      "SCALE",
+      "SPACE",
+      "SCAPE",
+      "SPACE"
+    ]
+  },
+  {
+    "episode": 3,
+    "target_word": "CAUSE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SCALE",
+      "SACKL",
+      "ACRID",
+      "CRAFT",
+      "CRANE"
+    ]
+  },
+  {
+    "episode": 4,
+    "target_word": "GLOVE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SLIME",
+      "BLAME",
+      "glow",
+      "PROUD",
+      "HORSE"
+    ]
+  },
+  {
+    "episode": 5,
+    "target_word": "BOARD",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "ROAST",
+      "DWARF",
+      "WARTH",
+      "BRAKE",
+      "BRAIN"
+    ]
+  },
+  {
+    "episode": 6,
+    "target_word": "STORY",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SPORT",
+      "SLOTH",
+      "lost",
+      "dolt",
+      "told"
+    ]
+  },
+  {
+    "episode": 7,
+    "target_word": "APPLE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SLATE",
+      "BLAME",
+      "DAMPF",
+      "AMASS",
+      "MATCH"
+    ]
+  },
+  {
+    "episode": 8,
+    "target_word": "MONEY",
+    "score": 0.6799999999999999,
+    "attempts": 3,
+    "success": true,
+    "guesses": [
+      "CRANE",
+      "SLIME",
+      "MONEY"
+    ]
+  },
+  {
+    "episode": 9,
+    "target_word": "SHAKE",
+    "score": 0.0,
+    "attempts": 6,
+    "success": false,
+    "guesses": [
+      "CRANE",
+      "SLATE",
+      "SHADE",
+      "SHAME",
+      "SHAKY",
+      "SHACK"
+    ]
+  }
+]

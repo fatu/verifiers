@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "start-vllm-server",
+            "type": "shell",
+            "command": "vf-vllm",
+            "args": [
+                "--model", "willcb/Qwen2.5-0.5B-Reverse-SFT",
+                "--tensor-parallel-size", "1",
+                "--port", "8000",
+                "--host", "localhost"
+            ],
+            "options": {
+                "env": {
+                    "CUDA_VISIBLE_DEVICES": "0"
+                }
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*)$",
+                    "file": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*INFO.*Starting.*$",
+                    "endsPattern": "^.*INFO.*Uvicorn running.*$"
+                }
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            }
+        },
+        {
+            "label": "stop-vllm-server",
+            "type": "shell",
+            "command": "pkill",
+            "args": ["-f", "vf-vllm"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        }
+    ]
+}

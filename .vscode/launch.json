@@ -28,6 +28,36 @@
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false,
             "subProcess": true
+        },
+        {
+            "name": "Debug Wordle Eval",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/verifiers/examples/benchmark/wordle_eval.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "TOKENIZERS_PARALLELISM": "false"
+            },
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false
+        },
+        {
+            "name": "Debug SFT Wordle (Python)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/verifiers/examples/sft/wordle.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0",
+                "PYTHONPATH": "${workspaceFolder}",
+                "WANDB_MODE": "disabled",
+                "TOKENIZERS_PARALLELISM": "false"
+            },
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false
         }
     ]
 }
